@@ -1,3 +1,5 @@
+import 'package:demo_app/screens/list_screen.dart';
+import 'package:demo_app/services/network_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
@@ -7,6 +9,7 @@ import 'common/alert_dialog.dart';
 import 'common/offline_banner.dart';
 
 
+// ignore: use_key_in_widget_constructors
 class LoginScreen extends StatefulWidget {
   static const routeName = '/loginscreen';
 
@@ -281,7 +284,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login(BuildContext context) async {
     var loggedIn = (_login == "test@test.com" && _password == "test");
     if (loggedIn) {
-
+      NetworkManager().getAppList(context);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ListScreen(),
+        ),
+      );
     } else {
       showAlertDialog(context, "Login", "Unable to login.");
     }
